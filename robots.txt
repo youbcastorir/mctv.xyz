@@ -1,0 +1,16 @@
+# MyRetroBlog — robots.txt
+# https://yourusername.github.io/MyRetroBlog/
+
+# Allow all crawlers
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://yourusername.github.io/MyRetroBlog/sitemap.xml
+
+# Crawl delay (be polite)
+Crawl-delay: 10
+
+# Disallow sensitive paths (none for static site)
+# Disallow: /admin/
+# Disallow: /private/

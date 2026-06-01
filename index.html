@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>MyRetroBlog — Your Personal Space Online 💫</title>
+  <meta name="description" content="MyRetroBlog — Create your personal blog, share photos, connect with friends. The ultimate retro blogging experience!" />
+  <meta name="keywords" content="blog, personal blog, retro blog, skyblog, social blogging, diary, photos" />
+  <meta name="author" content="MyRetroBlog" />
+
+  <!-- Open Graph -->
+  <meta property="og:title" content="MyRetroBlog — Your Personal Space Online 💫" />
+  <meta property="og:description" content="Create your personal blog, share photos, connect with friends. The ultimate retro blogging experience!" />
+  <meta property="og:type" content="website" />
+  <meta property="og:url" content="https://myretroblog.github.io/" />
+  <meta property="og:image" content="https://myretroblog.github.io/og-image.png" />
+
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="MyRetroBlog 💫" />
+  <meta name="twitter:description" content="Your personal space online — retro blogging revived!" />
+
+  <!-- Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌟</text></svg>" />
+
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&family=Patrick+Hand&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="style.css" />
+  <link rel="canonical" href="https://myretroblog.github.io/" />
+</head>
+<body data-theme="default">
+
+  <!-- ✨ Glitter canvas overlay -->
+  <canvas id="glitter-canvas"></canvas>
+
+  <!-- 🎵 Music Player Widget -->
+  <div id="music-player" class="music-player hidden">
+    <div class="music-player-inner">
+      <span class="music-icon">🎵</span>
+      <div class="music-info">
+        <span id="music-title">No song playing</span>
+      </div>
+      <div class="music-controls">
+        <button onclick="musicPrev()" title="Previous">⏮</button>
+        <button onclick="musicToggle()" id="music-play-btn" title="Play">▶</button>
+        <button onclick="musicNext()" title="Next">⏭</button>
+      </div>
+      <button onclick="closeMusicPlayer()" class="music-close">✕</button>
+    </div>
+  </div>
+
+  <!-- 👾 Visitor Counter -->
+  <div id="visitor-counter" class="visitor-counter">
+    <span>👁️ Visitors:</span>
+    <span id="visit-count" class="visit-num">000000</span>
+  </div>
+
+  <!-- 🌐 HEADER / NAVBAR -->
+  <header class="site-header">
+    <div class="header-stars">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
+    <div class="header-inner">
+      <div class="site-logo">
+        <span class="logo-star">⭐</span>
+        <span class="logo-text">My<span class="logo-retro">Retro</span>Blog</span>
+        <span class="logo-star">⭐</span>
+      </div>
+      <nav class="main-nav">
+        <a href="#" class="nav-link active" onclick="showView('home')">🏠 Home</a>
+        <a href="#" class="nav-link" onclick="showView('discover')">🔍 Discover</a>
+        <a href="#" class="nav-link" onclick="showView('create-blog')">✏️ My Blog</a>
+        <a href="#" class="nav-link" onclick="showView('profile')">👤 Profile</a>
+        <a href="#" class="nav-link" onclick="showView('gallery')">📸 Gallery</a>
+        <a href="#" class="nav-link" onclick="toggleMusicPlayer()">🎵 Music</a>
+      </nav>
+      <div class="header-actions">
+        <button class="btn-login" onclick="showModal('login-modal')">Login</button>
+        <button class="btn-signup" onclick="showModal('signup-modal')">✨ Sign Up FREE</button>
+      </div>
+      <button class="hamburger" onclick="toggleMobileMenu()" aria-label="Menu">☰</button>
+    </div>
+    <div class="mobile-menu" id="mobile-menu">
+      <a href="#" onclick="showView('home');toggleMobileMenu()">🏠 Home</a>
+      <a href="#" onclick="showView('discover');toggleMobileMenu()">🔍 Discover</a>
+      <a href="#" onclick="showView('create-blog');toggleMobileMenu()">✏️ My Blog</a>
+      <a href="#" onclick="showView('profile');toggleMobileMenu()">👤 Profile</a>
+      <a href="#" onclick="showView('gallery');toggleMobileMenu()">📸 Gallery</a>
+    </div>
+    <div class="header-stars">☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆</div>
+  </header>
+
+  <!-- 🌟 MARQUEE TICKER -->
+  <div class="ticker-wrap">
+    <div class="ticker">
+      <span>✨ Welcome to MyRetroBlog! The BEST place to share your life online! ✨</span>
+      <span>💌 New feature: Photo Albums are LIVE! Upload your memories!</span>
+      <span>🌟 Featured Blog: PixieDust_Dreams — check it out!</span>
+      <span>💖 Join 10,000+ bloggers sharing their world!</span>
+      <span>🎵 Add music to your profile — NEW widget available!</span>
+      <span>⭐ Top blog this week: NightOwlDiary — congrats!</span>
+    </div>
+  </div>
+
+  <!-- 📄 MAIN CONTENT VIEWS -->
+  <main class="main-content">
+
+    <!-- ════════════ HOME VIEW ════════════ -->
+    <div id="view-home" class="view active">
+      <div class="home-layout">
+
+        <!-- LEFT SIDEBAR -->
+        <aside class="sidebar sidebar-left">
+          <div class="widget">
+            <div class="widget-title">🌟 Featured Today</div>
+            <div id="featured-blogs" class="featured-list"></div>
+          </div>
+          <div class="widget">
+            <div class="widget-title">🔥 Trending Tags</div>
+            <div class="tag-cloud" id="tag-cloud"></div>
+          </div>
+          <div class="widget">
+            <div class="widget-title">😊 Mood Check</div>
+            <div class="mood-grid" id="mood-grid"></div>
+          </div>
+          <div class="widget">
+            <div class="widget-title">📅 This Day In History</div>
+            <div class="history-fact" id="history-fact">Loading...</div>
+          </div>
+        </aside>
+
+        <!-- CENTER FEED -->
+        <section class="center-feed">
+          <div class="feed-header">
+            <h2 class="feed-title">📝 Latest Blog Posts</h2>
+            <div class="feed-filters">
+              <button class="filter-btn active" onclick="filterFeed('all')">All</button>
+              <button class="filter-btn" onclick="filterFeed('diary')">📔 Diary</button>
+              <button class="filter-btn" onclick="filterFeed('photo')">📸 Photo</button>
+              <button class="filter-btn" onclick="filterFeed('story')">📖 Story</button>
+            </div>
+          </div>
+          <div id="posts-feed" class="posts-feed"></div>
+          <button class="load-more-btn" onclick="loadMorePosts()">Load more posts ✨</button>
+        </section>
+
+        <!-- RIGHT SIDEBAR -->
+        <aside class="sidebar sidebar-right">
+          <div class="widget join-widget">
+            <div class="widget-title">✨ Join MyRetroBlog!</div>
+            <p>Create YOUR personal blog for FREE!</p>
+            <ul class="join-features">
+              <li>✅ Free blog space</li>
+              <li>✅ Photo albums</li>
+              <li>✅ Customizable profile</li>
+              <li>✅ Comments & followers</li>
+              <li>✅ Music player</li>
+            </ul>
+            <button class="btn-signup big" onclick="showModal('signup-modal')">✨ Create My Blog!</button>
+          </div>
+          <div class="widget">
+            <div class="widget-title">🏆 Top Blogs This Week</div>
+            <ol class="top-blogs-list" id="top-blogs-list"></ol>
+          </div>
+          <div class="widget">
+            <div class="widget-title">🆕 Newest Members</div>
+            <div class="new-members" id="new-members"></div>
+          </div>
+          <div class="widget">
+            <div class="widget-title">🎲 Random Blog</div>
+            <button class="random-btn" onclick="loadRandomBlog()">Take Me Somewhere! 🎲</button>
+          </div>
+        </aside>
+
+      </div>
+    </div>
+
+    <!-- ════════════ DISCOVER VIEW ════════════ -->
+    <div id="view-discover" class="view">
+      <div class="discover-header">
+        <h2>🔍 Discover Blogs</h2>
+        <div class="search-bar">
+          <input type="text" id="search-input" placeholder="Search blogs, tags, people..." oninput="searchBlogs(this.value)" />
+          <button onclick="searchBlogs(document.getElementById('search-input').value)">🔍</button>
+        </div>
+      </div>
+      <div class="discover-categories">
+        <button class="cat-btn active" onclick="filterCategory('all')">🌍 All</button>
+        <button class="cat-btn" onclick="filterCategory('lifestyle')">💅 Lifestyle</button>
+        <button class="cat-btn" onclick="filterCategory('music')">🎵 Music</button>
+        <button class="cat-btn" onclick="filterCategory('gaming')">🎮 Gaming</button>
+        <button class="cat-btn" onclick="filterCategory('fashion')">👗 Fashion</button>
+        <button class="cat-btn" onclick="filterCategory('food')">🍕 Food</button>
+        <button class="cat-btn" onclick="filterCategory('travel')">✈️ Travel</button>
+        <button class="cat-btn" onclick="filterCategory('art')">🎨 Art</button>
+      </div>
+      <div id="discover-grid" class="discover-grid"></div>
+    </div>
+
+    <!-- ════════════ MY BLOG / CREATE POST VIEW ════════════ -->
+    <div id="view-create-blog" class="view">
+      <div class="blog-editor-layout">
+
+        <!-- Blog Sidebar -->
+        <aside class="blog-sidebar">
+          <div class="blog-profile-card" id="my-profile-card">
+            <div class="blog-avatar-wrap">
+              <img id="my-avatar" src="" alt="My Avatar" class="blog-avatar" />
+              <div class="online-dot" title="Online"></div>
+            </div>
+            <div class="blog-name" id="my-blog-name">My Blog</div>
+            <div class="blog-desc" id="my-blog-desc">Welcome to my world ✨</div>
+            <div class="blog-stats">
+              <div><strong id="my-posts-count">0</strong><br/>Posts</div>
+              <div><strong id="my-followers-count">0</strong><br/>Followers</div>
+              <div><strong id="my-views-count">0</strong><br/>Views</div>
+            </div>
+          </div>
+
+          <div class="widget">
+            <div class="widget-title">📋 My Info</div>
+            <div class="my-info" id="my-info-box"></div>
+          </div>
+
+          <div class="widget">
+            <div class="widget-title">🌈 Blog Theme</div>
+            <div class="theme-picker" id="theme-picker"></div>
+          </div>
+        </aside>
+
+        <!-- Blog Main -->
+        <div class="blog-main">
+          <div class="blog-tabs">
+            <button class="blog-tab active" onclick="switchBlogTab('write')">✏️ Write Post</button>
+            <button class="blog-tab" onclick="switchBlogTab('my-posts')">📝 My Posts</button>
+            <button class="blog-tab" onclick="switchBlogTab('guestbook')">📖 Guestbook</button>
+            <button class="blog-tab" onclick="switchBlogTab('settings')">⚙️ Settings</button>
+          </div>
+
+          <!-- Write Post -->
+          <div id="tab-write" class="blog-tab-content active">
+            <div class="post-editor">
+              <div class="post-type-selector">
+                <button class="post-type-btn active" onclick="setPostType('diary')" data-type="diary">📔 Diary</button>
+                <button class="post-type-btn" onclick="setPostType('story')" data-type="story">📖 Story</button>
+                <button class="post-type-btn" onclick="setPostType('photo')" data-type="photo">📸 Photo</button>
+                <button class="post-type-btn" onclick="setPostType('status')" data-type="status">💭 Status</button>
+              </div>
+
+              <div class="editor-form">
+                <input type="text" id="post-title" class="post-title-input" placeholder="Give your post a title... ✨" maxlength="100" />
+
+                <div class="mood-selector">
+                  <label>Current mood:</label>
+                  <select id="post-mood">
+                    <option value="">— choose —</option>
+                    <option value="happy">😊 Happy</option>
+                    <option value="sad">😢 Sad</option>
+                    <option value="excited">🤩 Excited</option>
+                    <option value="bored">😑 Bored</option>
+                    <option value="in-love">💕 In Love</option>
+                    <option value="angry">😠 Angry</option>
+                    <option value="anxious">😰 Anxious</option>
+                    <option value="nostalgic">🌙 Nostalgic</option>
+                    <option value="grateful">🙏 Grateful</option>
+                    <option value="silly">😜 Silly</option>
+                  </select>
+                </div>
+
+                <div class="toolbar">
+                  <button onclick="formatText('bold')" title="Bold"><b>B</b></button>
+                  <button onclick="formatText('italic')" title="Italic"><i>I</i></button>
+                  <button onclick="formatText('underline')" title="Underline"><u>U</u></button>
+                  <button onclick="insertEmoji('💖')" title="Heart">💖</button>
+                  <button onclick="insertEmoji('⭐')" title="Star">⭐</button>
+                  <button onclick="insertEmoji('🌙')" title="Moon">🌙</button>
+                  <button onclick="insertEmoji('✨')" title="Sparkle">✨</button>
+                  <button onclick="insertEmoji('🦋')" title="Butterfly">🦋</button>
+                  <button onclick="toggleEmojiPicker()" title="More emojis">😊+</button>
+                </div>
+
+                <div class="emoji-picker hidden" id="emoji-picker"></div>
+
+                <textarea id="post-content" class="post-textarea" placeholder="What's on your mind today? Share your thoughts, feelings, stories... 💭" rows="10"></textarea>
+
+                <div id="photo-upload-area" class="photo-upload-area hidden">
+                  <label class="upload-label">
+                    📸 Add Photos
+                    <input type="file" id="photo-input" accept="image/*" multiple onchange="handlePhotoUpload(event)" />
+                  </label>
+                  <div id="photo-previews" class="photo-previews"></div>
+                </div>
+
+                <div class="tags-input-wrap">
+                  <label>🏷️ Tags:</label>
+                  <input type="text" id="post-tags" placeholder="music, life, dreams (comma separated)" />
+                </div>
+
+                <div class="editor-actions">
+                  <button class="btn-draft" onclick="saveDraft()">💾 Save Draft</button>
+                  <button class="btn-publish" onclick="publishPost()">🚀 Publish!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- My Posts -->
+          <div id="tab-my-posts" class="blog-tab-content">
+            <div id="my-posts-list" class="my-posts-list"></div>
+          </div>
+
+          <!-- Guestbook -->
+          <div id="tab-guestbook" class="blog-tab-content">
+            <div class="guestbook">
+              <h3>📖 My Guestbook</h3>
+              <div class="guestbook-form">
+                <input type="text" id="guest-name" placeholder="Your name" />
+                <textarea id="guest-message" placeholder="Leave a message! ✨" rows="3"></textarea>
+                <button onclick="addGuestbookMessage()">✉️ Sign Guestbook!</button>
+              </div>
+              <div id="guestbook-entries" class="guestbook-entries"></div>
+            </div>
+          </div>
+
+          <!-- Settings -->
+          <div id="tab-settings" class="blog-tab-content">
+            <div class="settings-form">
+              <h3>⚙️ Blog Settings</h3>
+              <div class="form-group">
+                <label>Blog Title</label>
+                <input type="text" id="setting-blog-title" placeholder="My Amazing Blog" />
+              </div>
+              <div class="form-group">
+                <label>Your Name</label>
+                <input type="text" id="setting-name" placeholder="Your name" />
+              </div>
+              <div class="form-group">
+                <label>Profile Description</label>
+                <textarea id="setting-desc" rows="3" placeholder="Tell the world about yourself!"></textarea>
+              </div>
+              <div class="form-group">
+                <label>Favorite Music 🎵</label>
+                <input type="text" id="setting-music" placeholder="e.g. Linkin Park, Paramore..." />
+              </div>
+              <div class="form-group">
+                <label>Favorite Movies 🎬</label>
+                <input type="text" id="setting-movies" placeholder="e.g. The Matrix, Harry Potter..." />
+              </div>
+              <div class="form-group">
+                <label>Interests ❤️</label>
+                <input type="text" id="setting-interests" placeholder="e.g. Photography, Gaming, Art..." />
+              </div>
+              <div class="form-group">
+                <label>Location 📍</label>
+                <input type="text" id="setting-location" placeholder="City, Country" />
+              </div>
+              <div class="form-group">
+                <label>Profile Photo URL</label>
+                <input type="url" id="setting-avatar" placeholder="https://..." />
+              </div>
+              <div class="form-group">
+                <label>Profile Theme</label>
+                <select id="setting-theme" onchange="applyTheme(this.value)">
+                  <option value="default">🌸 Default Pink</option>
+                  <option value="blue">💙 Ocean Blue</option>
+                  <option value="green">🌿 Forest Green</option>
+                  <option value="purple">💜 Purple Dream</option>
+                  <option value="dark">🖤 Dark Night</option>
+                  <option value="rainbow">🌈 Rainbow</option>
+                  <option value="sunset">🌅 Sunset</option>
+                  <option value="mint">🍃 Mint Fresh</option>
+                </select>
+              </div>
+              <button class="btn-save-settings" onclick="saveSettings()">💾 Save Settings</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- ════════════ PROFILE VIEW ════════════ -->
+    <div id="view-profile" class="view">
+      <div id="profile-container"></div>
+    </div>
+
+    <!-- ════════════ GALLERY VIEW ════════════ -->
+    <div id="view-gallery" class="view">
+      <div class="gallery-header">
+        <h2>📸 My Photo Gallery</h2>
+        <button class="btn-new-album" onclick="showModal('new-album-modal')">+ New Album</button>
+      </div>
+      <div id="albums-grid" class="albums-grid"></div>
+      <div id="album-viewer" class="album-viewer hidden">
+        <button class="back-btn" onclick="closeAlbum()">← Back to Albums</button>
+        <h3 id="album-title-display"></h3>
+        <div id="album-photos-grid" class="album-photos-grid"></div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ═══════════════ MODALS ═══════════════ -->
+
+  <!-- Login Modal -->
+  <div id="login-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('login-modal')">✕</button>
+      <div class="modal-title">🔐 Login to MyRetroBlog</div>
+      <div class="form-group">
+        <label>Username or Email</label>
+        <input type="text" id="login-user" placeholder="username" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="login-pass" placeholder="••••••" />
+      </div>
+      <button class="btn-primary" onclick="doLogin()">Login ✨</button>
+      <div class="modal-footer">Don't have an account? <a href="#" onclick="switchModal('login-modal','signup-modal')">Sign Up FREE!</a></div>
+    </div>
+  </div>
+
+  <!-- Signup Modal -->
+  <div id="signup-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('signup-modal')">✕</button>
+      <div class="modal-title">✨ Join MyRetroBlog!</div>
+      <div class="form-group">
+        <label>Username</label>
+        <input type="text" id="signup-user" placeholder="Choose a cool username!" maxlength="20" />
+      </div>
+      <div class="form-group">
+        <label>Email</label>
+        <input type="email" id="signup-email" placeholder="your@email.com" />
+      </div>
+      <div class="form-group">
+        <label>Password</label>
+        <input type="password" id="signup-pass" placeholder="Min. 6 characters" />
+      </div>
+      <div class="form-group">
+        <label>Blog Name</label>
+        <input type="text" id="signup-blog" placeholder="My Awesome Blog ✨" maxlength="40" />
+      </div>
+      <button class="btn-primary" onclick="doSignup()">🚀 Create My Blog!</button>
+      <div class="modal-footer">Already a member? <a href="#" onclick="switchModal('signup-modal','login-modal')">Login here!</a></div>
+    </div>
+  </div>
+
+  <!-- New Album Modal -->
+  <div id="new-album-modal" class="modal-overlay hidden">
+    <div class="modal-box">
+      <button class="modal-close" onclick="closeModal('new-album-modal')">✕</button>
+      <div class="modal-title">📁 New Photo Album</div>
+      <div class="form-group">
+        <label>Album Name</label>
+        <input type="text" id="album-name-input" placeholder="Summer 2006 memories... ☀️" />
+      </div>
+      <div class="form-group">
+        <label>Description</label>
+        <input type="text" id="album-desc-input" placeholder="What's this album about?" />
+      </div>
+      <button class="btn-primary" onclick="createAlbum()">📁 Create Album!</button>
+    </div>
+  </div>
+
+  <!-- Post Detail Modal -->
+  <div id="post-modal" class="modal-overlay hidden">
+    <div class="modal-box wide">
+      <button class="modal-close" onclick="closeModal('post-modal')">✕</button>
+      <div id="post-modal-content"></div>
+      <div class="comment-section">
+        <h4>💬 Comments</h4>
+        <div id="post-modal-comments" class="comments-list"></div>
+        <div class="add-comment">
+          <input type="text" id="comment-author" placeholder="Your name" />
+          <textarea id="comment-text" placeholder="Leave a comment! ✨" rows="2"></textarea>
+          <button onclick="addComment()">💌 Post Comment</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast hidden"></div>
+
+  <!-- 🔻 FOOTER -->
+  <footer class="site-footer">
+    <div class="footer-stars">★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★ ★</div>
+    <div class="footer-inner">
+      <div class="footer-logo">⭐ MyRetroBlog ⭐</div>
+      <div class="footer-links">
+        <a href="#">About</a>
+        <a href="#">Terms</a>
+        <a href="#">Privacy</a>
+        <a href="#">Help</a>
+        <a href="mailto:salatrir@gmail.com">Contact</a>
+      </div>
+      <div class="footer-copy">
+        © 2006–2026 MyRetroBlog · Made with 💖 · Relive the golden era of blogging
+      </div>
+      <div class="footer-badges">
+        <span class="badge">🌟 Award Winning Site</span>
+        <span class="badge">💯 % Free</span>
+        <span class="badge">🔒 Safe for all ages</span>
+      </div>
+    </div>
+    <div class="footer-stars">☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆ ☆</div>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="profiles.js"></script>
+  <script src="blog.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
